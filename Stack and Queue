@@ -1,0 +1,620 @@
+1)Airport Baggage Handling System
+================================================================================================================
+You are part of the IT development team at an international airport, tasked with developing a simulation for the Baggage Handling System. In this system, baggage containers are stacked and unloaded according to the flight's loading/unloading schedule. The loading process strictly follows the Last In, First Out (LIFO) principle, meaning the last baggage container added to the stack is the first to be removed when needed.
+
+Your role is to implement a Stack data structure using an array to simulate the baggage stacking and unstacking process efficiently. This will help the airport team manage baggage container operations, such as loading (Push) or unloading (Pop) containers, checking the topmost container (Top), verifying if the stack is empty (IsEmpty), and tracking the number of containers in the stack (Size).
+
+The system must handle up to 100 baggage containers and ensure that operations are performed smoothly without exceeding the capacity. If the team tries to remove a baggage container from an empty stack, an alert should indicate a "Stack Underflow" error to prevent mishandling.
+
+Your implementation will assist airport operators by offering real-time monitoring of the baggage stack, allowing them to make efficient decisions based on the current stack status.
+
+Input Format
+
+The system will receive a series of commands to manage the baggage containers:
+
+The first line contains an integer N, which specifies the number of operations to be performed on the stack. Each of the following N lines contains a command in one of the following formats:
+
+Push X: Adds the baggage container X to the top of the stack.
+Pop: Removes the topmost baggage container from the stack.
+Top: Displays the baggage container at the top of the stack without removing it.
+IsEmpty: Checks if the stack is empty and returns either true or false.
+Size: Returns the number of baggage containers currently in the stack.
+Constraints
+
+The number of operations N is between 1 and 100.
+The baggage container number for the Push X operation will be between 1 and 1000.
+The stack can hold a maximum of 100 containers at any time.
+Output Format
+
+For each Top, IsEmpty, and Size command, you will output the respective result on a new line. If a Pop command is issued on an empty stack, the system should output "Stack Underflow".
+
+Sample Input 0
+
+8
+Push 10
+Push 20
+Top
+Pop
+Top
+Size
+Pop
+IsEmpty
+Sample Output 0
+
+20
+10
+1
+true
+Explanation 0
+
+Push 10: The baggage container with ID 10 is added to the stack. The stack now contains [10].
+Push 20: The baggage container with ID 20 is added on top of the stack. The stack now contains [10, 20].
+Top: The system checks the topmost baggage container and finds 20. This value is printed without removing it.
+Pop: The topmost container (20) is removed from the stack. The stack now contains [10].
+Top: The system checks the topmost baggage container and finds 10. This value is printed.
+Size: The system checks the number of containers in the stack, which is 1. This value is printed.
+Pop: The topmost container (10) is removed, leaving the stack empty: [].
+IsEmpty: The system checks if the stack is empty and finds that it is. Therefore, true is printed.
+Sample Input 1
+
+6
+Push 5
+Push 15
+Top
+Pop
+Size
+IsEmpty
+Sample Output 1
+
+15
+1
+false
+================================================================================================================
+
+import java.util.*;
+
+public class Main {
+    public static void main(String args[]) {
+        Scanner sc = new Scanner(System.in);
+        MyStack s = new MyStack();
+
+        int n = sc.nextInt();
+
+        for (int i = 0; i < n; i++) {
+            String op = sc.next();
+
+            if (op.equals("Push")) {
+                int x = sc.nextInt();
+                s.push(x);
+            }
+            else if (op.equals("Pop")) {
+                s.pop();
+            }
+            else if (op.equals("Top")) {
+                s.displayTop();
+            }
+            else if (op.equals("IsEmpty")) {
+                System.out.println(s.isEmpty());
+            }
+            else if (op.equals("Size")) {
+                System.out.println(s.size());
+            }
+        }
+
+        sc.close();
+    }
+}
+
+class MyStack {
+    int a[] = new int[100];
+    int top = -1;
+
+    public void push(int x) {
+        if (top == 99) {
+            return;
+        }
+
+        top++;
+        a[top] = x;
+    }
+
+    public void pop() {
+        if (top == -1) {
+            System.out.println("Stack Underflow");
+            return;
+        }
+
+        top--;
+    }
+
+    public void displayTop() {
+        if (top == -1) {
+            System.out.println("Stack Underflow");
+            return;
+        }
+
+        System.out.println(a[top]);
+    }
+
+    public boolean isEmpty() {
+        return top == -1;
+    }
+
+    public int size() {
+        return top + 1;
+    }
+}
+================================================================================================================
+
+
+2)Library Book Management System
+================================================================================================================
+
+In a busy library, returned books pile up at the counter before they are sorted and placed back on the shelves. The library staff faces the challenge of processing books in the correct order so that the first book returned is placed back on the shelves last, ensuring that the most recent returns are processed first. To simulate this process, you are tasked with designing a Library Book Management System that efficiently manages the returned books using a Stack data structure implemented with a Linked List.
+
+In this system, the librarian interacts with a stack of books where each book is treated as a node in a linked list. The stack follows the Last In, First Out (LIFO) principle, meaning the last book added to the stack will be the first one removed for shelving. This ensures that the most recent returns are processed first, which is critical for avoiding delays in returning popular books to the shelves.
+
+Your role is to implement a Stack using a Linked List to help the librarian perform essential operations:
+
+Push Book: When a user returns a book, it is placed at the top of the stack. Each book has a unique name, which is stored as a string.
+Pop Book: Once the librarian is ready to return a book to the shelves, the topmost book is removed from the stack.
+Top Book: The librarian may want to see which book is at the top of the stack (i.e., the most recently returned book) without removing it.
+IsEmpty: The librarian can check whether there are any books in the stack at the counter.
+Size: The librarian can check how many books are currently at the counter.
+This system ensures that the librarian manages the returned books efficiently and prevents issues such as stacking too many books or accidentally removing books when the stack is empty.
+
+Input Format
+
+The first line contains an integer N, representing the number of operations.
+
+Each of the next N lines contains one of the following commands:
+
+"Push BookName": Add a book named BookName to the top of the stack.
+"Pop": Remove the topmost book from the stack.
+"Top": Display the name of the book on the top of the stack.
+"IsEmpty": Print true if the stack is empty; otherwise, print false.
+"Size": Print the number of books in the stack.
+Constraints
+
+1 <= N <= 100
+The name of each book in the Push BookName operation will be a string with up to 100 characters.
+Output Format
+
+For each "Top", "IsEmpty", and "Size" operation, the system prints the result on a new line.
+If the "Pop" or "Top" operation is called on an empty stack, the system prints "Stack Underflow".
+Sample Input 0
+
+7
+Push HarryPotter
+Push TheHobbit
+Top
+Size
+Pop
+Top
+IsEmpty
+Sample Output 0
+
+TheHobbit
+2
+HarryPotter
+false
+Explanation 0
+
+Push HarryPotter: The book "HarryPotter" is added to the stack. The stack is now ["HarryPotter"].
+Push TheHobbit: The book "TheHobbit" is added to the stack. The stack is now ["HarryPotter", "TheHobbit"].
+Top: The system displays the topmost book, "TheHobbit", which is the most recently returned book.
+Size: The system displays 2, indicating there are two books in the stack.
+Pop: The book "TheHobbit" is removed from the stack. The stack is now ["HarryPotter"].
+Top: The system displays the topmost book, "HarryPotter".
+IsEmpty: The system displays false, indicating that the stack is not empty.
+Sample Input 1
+
+5
+Push TheGreatGatsby
+Push ToKillAMockingbird
+Top
+Pop
+IsEmpty
+Sample Output 1
+
+ToKillAMockingbird
+false
+ 
+================================================================================================================
+
+import java.util.*;
+
+public class Main {
+    public static void main(String args[]) {
+        Scanner sc = new Scanner(System.in);
+        Stack s = new Stack();
+
+        int n = sc.nextInt();
+
+        for (int i = 0; i < n; i++) {
+            String op = sc.next();
+
+            if (op.equals("Push")) {
+                String name = sc.next();
+                s.push(name);
+            }
+            else if (op.equals("Pop")) {
+                s.pop();
+            }
+            else if (op.equals("Top")) {
+                s.top();
+            }
+            else if (op.equals("IsEmpty")) {
+                System.out.println(s.isEmpty());
+            }
+            else if (op.equals("Size")) {
+                System.out.println(s.size());
+            }
+        }
+    }
+}
+
+class Node {
+    String data;
+    Node next;
+
+    Node(String d) {
+        data = d;
+        next = null;
+    }
+}
+
+class Stack {
+    Node top;
+    int count = 0;
+
+    public void push(String name) {
+        Node newNode = new Node(name);
+
+        newNode.next = top;
+        top = newNode;
+
+        count++;
+    }
+
+    public void pop() {
+        if (top == null) {
+            System.out.println("Stack Underflow");
+            return;
+        }
+
+        top = top.next;
+        count--;
+    }
+
+    public void top() {
+        if (top == null) {
+            System.out.println("Stack Underflow");
+            return;
+        }
+
+        System.out.println(top.data);
+    }
+
+    public boolean isEmpty() {
+        return top == null;
+    }
+
+    public int size() {
+        return count;
+    }
+}
+
+================================================================================================================
+================================================================================================================
+================================================================================================================
+3)Emergency Room Triage System
+================================================================================================================
+
+You are part of a development team creating a triage system for an emergency room in a hospital. When patients arrive at the emergency room, they are assessed based on the severity of their condition. Patients with more severe conditions should be treated first, regardless of their arrival time.
+
+To implement this, you decide to use a priority queue, where each patient has a priority based on their condition. The system should allow for the following operations:
+
+Enqueue: Add a patient to the queue with a given name and severity level (higher severity levels indicate higher priority).
+Dequeue: Remove and return the name of the patient with the highest priority.
+Display: Show the current queue status with patient names and their severity levels.
+Input Format
+
+The first line of input specifies the number of operations to perform.
+
+Each subsequent line contains an operation:
+
+For enqueue: ENQUEUE
+For dequeue: DEQUEUE
+For display: DISPLAY
+Constraints
+
+NA
+
+Output Format
+
+For DEQUEUE: Print the name of the patient being treated.
+For DISPLAY: Print the current queue status with patient names and their severity levels.If queue is empty,Print "Queue is empty."
+Sample Input 0
+
+6
+ENQUEUE John 2
+ENQUEUE Alice 3
+ENQUEUE Bob 1
+DISPLAY
+DEQUEUE
+DISPLAY
+Sample Output 0
+
+Current Queue: Alice(3) John(2) Bob(1)
+Treated Patient: Alice
+Current Queue: John(2) Bob(1)
+Explanation 0
+
+The first command ENQUEUE John 2 adds patient John with severity level 2.
+The second command ENQUEUE Alice 3 adds patient Alice with severity level 3.
+The third command ENQUEUE Bob 1 adds patient Bob with severity level 1.
+The DISPLAY command shows the current queue status: Alice(3) John(2) Bob(1).
+The DEQUEUE command treats Alice, who has the highest severity level of 3.
+The final DISPLAY command shows that only John and Bob remain in the queue.
+Sample Input 1
+
+5
+ENQUEUE Sarah 4
+ENQUEUE Tom 4
+ENQUEUE Jake 2
+DEQUEUE
+DISPLAY
+Sample Output 1
+
+Treated Patient: Sarah
+Current Queue: Tom(4) Jake(2)
+================================================================================================================
+
+import java.util.*;
+
+public class Main {
+    public static void main(String args[]) {
+        Scanner sc = new Scanner(System.in);
+        PriorityQueue q = new PriorityQueue();
+
+        int n = sc.nextInt();
+
+        for (int i = 0; i < n; i++) {
+            String op = sc.next();
+
+            if (op.equals("ENQUEUE")) {
+                String name = sc.next();
+                int priority = sc.nextInt();
+                q.enqueue(name, priority);
+            }
+            else if (op.equals("DEQUEUE")) {
+                q.dequeue();
+            }
+            else if (op.equals("DISPLAY")) {
+                q.display();
+            }
+        }
+    }
+}
+
+class Node {
+    String name;
+    int priority;
+    Node next;
+
+    Node(String name, int priority) {
+        this.name = name;
+        this.priority = priority;
+        this.next = null;
+    }
+}
+
+class PriorityQueue {
+    Node head;
+
+    public void enqueue(String name, int priority) {
+        Node newNode = new Node(name, priority);
+
+        if (head == null || priority > head.priority) {
+            newNode.next = head;
+            head = newNode;
+            return;
+        }
+
+        Node curr = head;
+
+        while (curr.next != null && curr.next.priority >= priority) {
+            curr = curr.next;
+        }
+
+        newNode.next = curr.next;
+        curr.next = newNode;
+    }
+
+    public void dequeue() {
+        if (head == null) {
+            return;
+        }
+
+        System.out.println("Treated Patient: " + head.name);
+        head = head.next;
+    }
+
+    public void display() {
+        if (head == null) {
+            System.out.println("Queue is empty.");
+            return;
+        }
+
+        System.out.print("Current Queue: ");
+
+        Node curr = head;
+
+        while (curr != null) {
+            System.out.print(curr.name + "(" + curr.priority + ") ");
+            curr = curr.next;
+        }
+
+        System.out.println();
+    }
+}
+
+================================================================================================================
+================================================================================================================
+
+4)File Version Management
+================================================================================================================
+You are developing a file version control system where each version of a file is stored on top of the previous versions using a stack-like structure. The system should allow users to manage file versions efficiently. Every time a new version is created, it should be pushed onto the stack. When users want to retrieve the latest version or remove it, the top version should be accessed or deleted. The goal is to implement this version control system using a stack built solely using queues.
+
+You are tasked with implementing a version control system where the following operations are performed:
+
+Push new version: Each time a new version of the file is created, it is pushed onto the top of the stack.
+Pop the latest version: When the user wants to remove the latest version, it should be popped off from the top of the stack.
+View the latest version: The user should be able to view the current version of the file without removing it.
+Check if there are any versions: The user should be able to check if there are any versions saved in the system.
+Your task is to implement a Main class using two queues that handle the following operations:
+
+push(int version) – Pushes the new file version onto the stack.
+pop() – Removes the latest file version from the stack and returns it.
+top() – Returns the latest file version without removing it.
+empty() – Checks if there are no versions saved and returns true if the stack is empty, false otherwise.
+Input Format
+
+The first line of input specifies the number of operations to be performed, followed by the specific operations like push, pop, top, or empty.
+
+Constraints
+
+NA
+
+Output Format
+
+For push: Print the pushed version number.
+For pop: Print the version removed.
+For top: Print the current top version.
+For empty: Print true if the stack is empty, false otherwise.
+Sample Input 0
+
+6
+push 1
+push 2
+top
+pop
+top
+empty
+Sample Output 0
+
+Pushed: 1
+Pushed: 2
+Top version: 2
+Popped: 2
+Top version: 1
+Is stack empty: false
+Explanation 0
+
+push 1: The first version is pushed, which results in the stack having [1].
+push 2: The second version is pushed, resulting in the stack becoming [1, 2].
+top: The current top version is 2, so output 2.
+pop: The top version (2) is removed, leaving the stack with [1].
+top: Now the current top version is 1, so output 1.
+empty: The stack still has one version, so the result is false.
+Sample Input 1
+
+8
+push 3
+push 5
+push 7
+top
+pop
+top
+pop
+empty
+Sample Output 1
+
+Pushed: 3
+Pushed: 5
+Pushed: 7
+Top version: 7
+Popped: 7
+Top version: 5
+Popped: 5
+Is stack empty: false
+================================================================================================================
+
+import java.util.*;
+
+public class Main {
+    public static void main(String args[]) {
+        Scanner sc = new Scanner(System.in);
+        MyStack s = new MyStack();
+
+        int n = sc.nextInt();
+
+        for (int i = 0; i < n; i++) {
+            String op = sc.next();
+
+            if (op.equals("push")) {
+                int x = sc.nextInt();
+                s.push(x);
+                System.out.println("Pushed: " + x);
+            }
+            else if (op.equals("pop")) {
+                if (!s.empty()) {
+                    System.out.println("Popped: " + s.pop());
+                }
+            }
+            else if (op.equals("top")) {
+                if (!s.empty()) {
+                    System.out.println("Top version: " + s.top());
+                }
+            }
+            else if (op.equals("empty")) {
+                System.out.println("Is stack empty: " + s.empty());
+            }
+        }
+    }
+}
+
+class MyStack {
+    Queue<Integer> q1 = new LinkedList<>();
+    Queue<Integer> q2 = new LinkedList<>();
+
+    public void push(int x) {
+        q2.add(x);
+
+        while (!q1.isEmpty()) {
+            q2.add(q1.remove());
+        }
+
+        Queue<Integer> temp = q1;
+        q1 = q2;
+        q2 = temp;
+    }
+
+    public int pop() {
+        return q1.remove();
+    }
+
+    public int top() {
+        return q1.peek();
+    }
+
+    public boolean empty() {
+        return q1.isEmpty();
+    }
+}
+
+================================================================================================================
+================================================================================================================
+================================================================================================================
+================================================================================================================
+================================================================================================================
+================================================================================================================
+================================================================================================================
+================================================================================================================
+================================================================================================================
+================================================================================================================
+================================================================================================================
+================================================================================================================
+================================================================================================================
+================================================================================================================
