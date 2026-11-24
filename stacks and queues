@@ -1,0 +1,484 @@
+
+import java.util.*;
+
+public class Main {
+    public static void main(String args[]) {
+        Scanner sc = new Scanner(System.in);
+        MyStack s = new MyStack();
+
+        int n = sc.nextInt();
+
+        for (int i = 0; i < n; i++) {
+            String op = sc.next();
+
+            if (op.equals("Push")) {
+                int x = sc.nextInt();
+                s.push(x);
+            }
+            else if (op.equals("Pop")) {
+                s.pop();
+            }
+            else if (op.equals("Top")) {
+                s.displayTop();
+            }
+            else if (op.equals("IsEmpty")) {
+                System.out.println(s.isEmpty());
+            }
+            else if (op.equals("Size")) {
+                System.out.println(s.size());
+            }
+        }
+
+        sc.close();
+    }
+}
+
+class MyStack {
+    int a[] = new int[100];
+    int top = -1;
+
+    public void push(int x) {
+        if (top == 99) {
+            return;
+        }
+
+        top++;
+        a[top] = x;
+    }
+
+    public void pop() {
+        if (top == -1) {
+            System.out.println("Stack Underflow");
+            return;
+        }
+
+        top--;
+    }
+
+    public void displayTop() {
+        if (top == -1) {
+            System.out.println("Stack Underflow");
+            return;
+        }
+
+        System.out.println(a[top]);
+    }
+
+    public boolean isEmpty() {
+        return top == -1;
+    }
+
+    public int size() {
+        return top + 1;
+    }
+}
+========================================
+
+import java.util.*;
+
+public class Main {
+    public static void main(String args[]) {
+        Scanner sc = new Scanner(System.in);
+        Stack s = new Stack();
+
+        int n = sc.nextInt();
+
+        for (int i = 0; i < n; i++) {
+            String op = sc.next();
+
+            if (op.equals("Push")) {
+                String name = sc.next();
+                s.push(name);
+            }
+            else if (op.equals("Pop")) {
+                s.pop();
+            }
+            else if (op.equals("Top")) {
+                s.top();
+            }
+            else if (op.equals("IsEmpty")) {
+                System.out.println(s.isEmpty());
+            }
+            else if (op.equals("Size")) {
+                System.out.println(s.size());
+            }
+        }
+    }
+}
+
+class Node {
+    String data;
+    Node next;
+
+    Node(String d) {
+        data = d;
+        next = null;
+    }
+}
+
+class Stack {
+    Node top;
+    int count = 0;
+
+    public void push(String name) {
+        Node newNode = new Node(name);
+
+        newNode.next = top;
+        top = newNode;
+
+        count++;
+    }
+
+    public void pop() {
+        if (top == null) {
+            System.out.println("Stack Underflow");
+            return;
+        }
+
+        top = top.next;
+        count--;
+    }
+
+    public void top() {
+        if (top == null) {
+            System.out.println("Stack Underflow");
+            return;
+        }
+
+        System.out.println(top.data);
+    }
+
+    public boolean isEmpty() {
+        return top == null;
+    }
+
+    public int size() {
+        return count;
+    }
+}
+===================================================
+import java.util.*;
+
+public class Main {
+    public static void main(String args[]) {
+        Scanner sc = new Scanner(System.in);
+
+        String s = sc.nextLine();
+
+        Stack<Character> st = new Stack<>();
+
+        for (int i = 0; i < s.length(); i++) {
+            st.push(s.charAt(i));
+        }
+
+        while (!st.isEmpty()) {
+            System.out.print(st.pop());
+        }
+    }
+}
+=========================================
+============
+
+import java.util.*;
+
+public class Main {
+    public static void main(String args[]) {
+        Scanner sc = new Scanner(System.in);
+        PriorityQueue q = new PriorityQueue();
+
+        int n = sc.nextInt();
+
+        for (int i = 0; i < n; i++) {
+            String op = sc.next();
+
+            if (op.equals("ENQUEUE")) {
+                String name = sc.next();
+                int priority = sc.nextInt();
+                q.enqueue(name, priority);
+            }
+            else if (op.equals("DEQUEUE")) {
+                q.dequeue();
+            }
+            else if (op.equals("DISPLAY")) {
+                q.display();
+            }
+        }
+    }
+}
+
+class Node {
+    String name;
+    int priority;
+    Node next;
+
+    Node(String name, int priority) {
+        this.name = name;
+        this.priority = priority;
+        this.next = null;
+    }
+}
+
+class PriorityQueue {
+    Node head;
+
+    public void enqueue(String name, int priority) {
+        Node newNode = new Node(name, priority);
+
+        if (head == null || priority > head.priority) {
+            newNode.next = head;
+            head = newNode;
+            return;
+        }
+
+        Node curr = head;
+
+        while (curr.next != null && curr.next.priority >= priority) {
+            curr = curr.next;
+        }
+
+        newNode.next = curr.next;
+        curr.next = newNode;
+    }
+
+    public void dequeue() {
+        if (head == null) {
+            return;
+        }
+
+        System.out.println("Treated Patient: " + head.name);
+        head = head.next;
+    }
+
+    public void display() {
+        if (head == null) {
+            System.out.println("Queue is empty.");
+            return;
+        }
+
+        System.out.print("Current Queue: ");
+
+        Node curr = head;
+
+        while (curr != null) {
+            System.out.print(curr.name + "(" + curr.priority + ") ");
+            curr = curr.next;
+        }
+
+        System.out.println();
+    }
+}
+======================================================================
+
+import java.util.*;
+
+public class Main {
+    public static void main(String args[]) {
+        Scanner sc = new Scanner(System.in);
+        MyStack s = new MyStack();
+
+        int n = sc.nextInt();
+
+        for (int i = 0; i < n; i++) {
+            String op = sc.next();
+
+            if (op.equals("push")) {
+                int x = sc.nextInt();
+                s.push(x);
+                System.out.println("Pushed: " + x);
+            }
+            else if (op.equals("pop")) {
+                if (!s.empty()) {
+                    System.out.println("Popped: " + s.pop());
+                }
+            }
+            else if (op.equals("top")) {
+                if (!s.empty()) {
+                    System.out.println("Top version: " + s.top());
+                }
+            }
+            else if (op.equals("empty")) {
+                System.out.println("Is stack empty: " + s.empty());
+            }
+        }
+    }
+}
+
+class MyStack {
+    Queue<Integer> q1 = new LinkedList<>();
+    Queue<Integer> q2 = new LinkedList<>();
+
+    public void push(int x) {
+        q2.add(x);
+
+        while (!q1.isEmpty()) {
+            q2.add(q1.remove());
+        }
+
+        Queue<Integer> temp = q1;
+        q1 = q2;
+        q2 = temp;
+    }
+
+    public int pop() {
+        return q1.remove();
+    }
+
+    public int top() {
+        return q1.peek();
+    }
+
+    public boolean empty() {
+        return q1.isEmpty();
+    }
+}
+====================================================================
+Post class
+====================================================================
+import java.util.*;
+
+public class Main {
+    public static void main(String args[]) {
+        Scanner sc = new Scanner(System.in);
+
+        MyQueue q = new MyQueue();
+
+        int n = sc.nextInt();
+
+        for (int i = 0; i < n; i++) {
+            String op = sc.next();
+
+            if (op.equals("push")) {
+                int x = sc.nextInt();
+                q.push(x);
+                System.out.println("Order added: " + x);
+            }
+            else if (op.equals("pop")) {
+                System.out.println("Order processed: " + q.pop());
+            }
+            else if (op.equals("peek")) {
+                System.out.println("Next order: " + q.peek());
+            }
+            else if (op.equals("empty")) {
+                System.out.println("Is queue empty: " + q.empty());
+            }
+        }
+    }
+}
+
+class MyQueue {
+    Stack<Integer> s1 = new Stack<>();
+    Stack<Integer> s2 = new Stack<>();
+
+    public void push(int x) {
+        s1.push(x);
+    }
+
+    public int pop() {
+        if (s2.isEmpty()) {
+            while (!s1.isEmpty()) {
+                s2.push(s1.pop());
+            }
+        }
+        return s2.pop();
+    }
+
+    public int peek() {
+        if (s2.isEmpty()) {
+            while (!s1.isEmpty()) {
+                s2.push(s1.pop());
+            }
+        }
+        return s2.peek();
+    }
+
+    public boolean empty() {
+        return s1.isEmpty() && s2.isEmpty();
+    }
+}
+===================================
+import java.util.*;
+
+public class Main {
+    public static void main(String args[]) {
+        Scanner sc = new Scanner(System.in);
+
+        int size = sc.nextInt();
+        int n = sc.nextInt();
+
+        CircularQueue q = new CircularQueue(size);
+
+        for (int i = 0; i < n; i++) {
+            String op = sc.next();
+
+            if (op.equals("enqueue")) {
+                int x = sc.nextInt();
+                if (q.enqueue(x))
+                    System.out.println("Booked seat: " + x);
+                else
+                    System.out.println("Booking failed");
+            }
+            else if (op.equals("dequeue")) {
+                if (q.isEmpty())
+                    System.out.println("No booking to cancel");
+                else
+                    System.out.println("Canceled seat: " + q.dequeue());
+            }
+            else if (op.equals("front")) {
+                if (q.isEmpty())
+                    System.out.println("No bookings");
+                else
+                    System.out.println("Next seat to be canceled: " + q.front());
+            }
+            else if (op.equals("isFull")) {
+                System.out.println(q.isFull());
+            }
+            else if (op.equals("isEmpty")) {
+                System.out.println(q.isEmpty());
+            }
+        }
+    }
+}
+
+class CircularQueue {
+    int a[];
+    int front = 0;
+    int rear = -1;
+    int count = 0;
+    int size;
+
+    CircularQueue(int size) {
+        this.size = size;
+        a = new int[size];
+    }
+
+    public boolean enqueue(int x) {
+        if (isFull())
+            return false;
+
+        rear = (rear + 1) % size;
+        a[rear] = x;
+        count++;
+
+        return true;
+    }
+
+    public int dequeue() {
+        int x = a[front];
+        front = (front + 1) % size;
+        count--;
+
+        return x;
+    }
+
+    public int front() {
+        return a[front];
+    }
+
+    public boolean isFull() {
+        return count == size;
+    }
+
+    public boolean isEmpty() {
+        return count == 0;
+    }
+}
